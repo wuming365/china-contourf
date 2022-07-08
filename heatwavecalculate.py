@@ -823,95 +823,130 @@ def calc_monthTI():
 
 
 #计算热浪日数与天数和并拟合
-def combine():
+def combine(start_year=1990, end_year=2020):
     dir_path = r"G:\dem_chazhi\result\热浪不同指标结果"
     out_path = r"G:\dem_chazhi\result\时间序列"
-    for year in range(1990, 2000):
-        HWC_name = os.path.join(dir_path, f"{year}_热浪次数(mean).tif")
-        if not os.path.exists(HWC_name):
-            Igs, im_geotrans, im_proj, ndv = openImages([
-                fr"{dir_path}\{year}_热浪次数(mean)_1.tif",
-                fr"{dir_path}\{year}_热浪次数(mean)_2.tif",
-                fr"{dir_path}\{year}_热浪次数(mean)_3.tif"
-            ])
-            Ig_out = np.sum(Igs, axis=0)
-            Ig_out = ma.masked_where(Igs[0] == ndv, Ig_out).filled(ndv)
-            write_img(Ig_out, f"{year}_热浪次数(mean).tif", im_proj, im_geotrans,
-                      dir_path, ndv)
+    # for year in range(1990, 2000):
+    #     HWC_name = os.path.join(dir_path, f"{year}_热浪次数(mean).tif")
+    #     if not os.path.exists(HWC_name):
+    #         Igs, im_geotrans, im_proj, ndv = openImages([
+    #             fr"{dir_path}\{year}_热浪次数(mean)_1.tif",
+    #             fr"{dir_path}\{year}_热浪次数(mean)_2.tif",
+    #             fr"{dir_path}\{year}_热浪次数(mean)_3.tif"
+    #         ])
+    #         Ig_out = np.sum(Igs, axis=0)
+    #         Ig_out = ma.masked_where(Igs[0] == ndv, Ig_out).filled(ndv)
+    #         write_img(Ig_out, f"{year}_热浪次数(mean).tif", im_proj, im_geotrans,
+    #                   dir_path, ndv)
 
-        HWR_name = os.path.join(dir_path, f"{year}_热浪日数(3).tif")
-        if not os.path.exists(HWR_name):
-            Igs, im_geotrans, im_proj, ndv = openImages([
-                fr"{dir_path}\{year}_热浪日数(3)_1.tif",
-                fr"{dir_path}\{year}_热浪日数(3)_2.tif",
-                fr"{dir_path}\{year}_热浪日数(3)_3.tif"
-            ])
-            Ig_out = np.sum(Igs, axis=0)
-            Ig_out = ma.masked_where(Igs[0] == ndv, Ig_out).filled(ndv)
-            write_img(Ig_out, f"{year}_热浪日数(3).tif", im_proj, im_geotrans,
-                      dir_path, ndv)
+    #     HWR_name = os.path.join(dir_path, f"{year}_热浪日数(3).tif")
+    #     if not os.path.exists(HWR_name):
+    #         Igs, im_geotrans, im_proj, ndv = openImages([
+    #             fr"{dir_path}\{year}_热浪日数(3)_1.tif",
+    #             fr"{dir_path}\{year}_热浪日数(3)_2.tif",
+    #             fr"{dir_path}\{year}_热浪日数(3)_3.tif"
+    #         ])
+    #         Ig_out = np.sum(Igs, axis=0)
+    #         Ig_out = ma.masked_where(Igs[0] == ndv, Ig_out).filled(ndv)
+    #         write_img(Ig_out, f"{year}_热浪日数(3).tif", im_proj, im_geotrans,
+    #                   dir_path, ndv)
 
     HWCs_1 = [
-        fr"{dir_path}\{year}_热浪次数(mean)_1.tif" for year in range(1990, 2020)
+        fr"{dir_path}\{year}_热浪次数(mean)_1.tif"
+        for year in range(start_year, end_year)
     ]
     HWCs_2 = [
-        fr"{dir_path}\{year}_热浪次数(mean)_2.tif" for year in range(1990, 2020)
+        fr"{dir_path}\{year}_热浪次数(mean)_2.tif"
+        for year in range(start_year, end_year)
     ]
     HWCs_3 = [
-        fr"{dir_path}\{year}_热浪次数(mean)_3.tif" for year in range(1990, 2020)
+        fr"{dir_path}\{year}_热浪次数(mean)_3.tif"
+        for year in range(start_year, end_year)
     ]
-    HWCs = [fr"{dir_path}\{year}_热浪次数(mean).tif" for year in range(1990, 2020)]
+    HWCs = [
+        fr"{dir_path}\{year}_热浪次数(mean).tif"
+        for year in range(start_year, end_year)
+    ]
     HWRs_1 = [
-        fr"{dir_path}\{year}_热浪日数(3)_1.tif" for year in range(1990, 2020)
+        fr"{dir_path}\{year}_热浪日数(3)_1.tif"
+        for year in range(start_year, end_year)
     ]
     HWRs_2 = [
-        fr"{dir_path}\{year}_热浪日数(3)_2.tif" for year in range(1990, 2020)
+        fr"{dir_path}\{year}_热浪日数(3)_2.tif"
+        for year in range(start_year, end_year)
     ]
     HWRs_3 = [
-        fr"{dir_path}\{year}_热浪日数(3)_3.tif" for year in range(1990, 2020)
+        fr"{dir_path}\{year}_热浪日数(3)_3.tif"
+        for year in range(start_year, end_year)
     ]
-    HWRs = [fr"{dir_path}\{year}_热浪日数(3).tif" for year in range(1990, 2020)]
-    HWMDs = [fr"{dir_path}\{year}_最长热浪持续日数.tif" for year in range(1990, 2020)]
+    HWRs = [
+        fr"{dir_path}\{year}_热浪日数(3).tif"
+        for year in range(start_year, end_year)
+    ]
+    HWMDs = [
+        fr"{dir_path}\{year}_最长热浪持续日数.tif"
+        for year in range(start_year, end_year)
+    ]
     HWMHIs = [
-        fr"{dir_path}\{year}_最大单日热浪指数(3).tif" for year in range(1990, 2020)
+        fr"{dir_path}\{year}_最大单日热浪指数(3).tif"
+        for year in range(start_year, end_year)
     ]
-    HWEDs = [fr"{dir_path}\{year}_热浪开始日期(3).tif" for year in range(1990, 2020)]
-    HWSDs = [fr"{dir_path}\{year}_热浪结束日期(3).tif" for year in range(1990, 2020)]
+    HWEDs = [
+        fr"{dir_path}\{year}_热浪开始日期(3).tif"
+        for year in range(start_year, end_year)
+    ]
+    HWSDs = [
+        fr"{dir_path}\{year}_热浪结束日期(3).tif"
+        for year in range(start_year, end_year)
+    ]
     HWMRHIs = [
-        fr"{dir_path}\{year}_最大热浪HI指数极差(3).tif" for year in range(1990, 2020)
+        fr"{dir_path}\{year}_最大热浪HI指数极差(3).tif"
+        for year in range(start_year, end_year)
     ]
     indexs = [
         HWCs_1, HWCs_2, HWCs_3, HWCs, HWRs_1, HWRs_2, HWRs_3, HWRs, HWMDs,
         HWMHIs, HWEDs, HWSDs, HWMRHIs
     ]
     for index in indexs:
-        filename = "slope_" + "_".join(index[0].split("\\")[-1].split("_")[1:])
-        if not os.path.exists(os.path.join(out_path, filename)):
+        avg_name = "avg_" + "_".join(
+            index[0].split("\\")[-1].split("_")[1:])[:-4] + "_" + str(
+                start_year) + "_" + str(end_year) + ".tif"
+        filename = "slope_" + "_".join(
+            index[0].split("\\")[-1].split("_")[1:])[:-4] + "_" + str(
+                start_year) + "_" + str(end_year) + ".tif"
+        if not os.path.exists(os.path.join(out_path, avg_name)):
             Igs, im_geotrans, im_proj, ndv = openImages(index)
-            slope_data = np.full_like(Igs[0], ndv, dtype=float)
-            height = slope_data.shape[0]
-            width = slope_data.shape[1]
-            Igs = ma.masked_where(Igs == ndv, Igs)
-            Igs = np.transpose(Igs)
+            Igs = ma.masked_equal(Igs, ndv)
 
-            import scipy.stats as st
-            from tqdm import trange
-            for i in trange(width):
-                for j in range(height):
-                    if Igs[i][j][0] is not ma.masked:
-                        y = Igs[i][j]
-                        if ma.masked in y:
-                            y = np.array([i for i in y if i is not ma.masked])
-                        x = list(range(len(y)))
-                        if len(y) < 10:
-                            continue
-                        slope, intercept, r_value, p_value, std_err = st.linregress(
-                            x, y)
-                        if p_value < 0.05:
-                            slope_data[j][i] = slope
-            write_img(slope_data, filename, im_proj, im_geotrans, out_path,
-                      ndv)
-            del Igs
+            avg_data = np.mean(Igs, axis=0).filled(ndv)
+            write_img(avg_data, avg_name, im_proj, im_geotrans, out_path, ndv)
+
+        # if not os.path.exists(os.path.join(out_path, filename)):
+        #     Igs, im_geotrans, im_proj, ndv = openImages(index)
+        #     slope_data = np.full_like(Igs[0], ndv, dtype=float)
+        #     height = slope_data.shape[0]
+        #     width = slope_data.shape[1]
+        #     Igs = ma.masked_where(Igs == ndv, Igs)
+        #     Igs = np.transpose(Igs)
+
+        #     import scipy.stats as st
+        #     from tqdm import trange
+        #     for i in trange(width):
+        #         for j in range(height):
+        #             if Igs[i][j][0] is not ma.masked:
+        #                 y = Igs[i][j]
+        #                 if ma.masked in y:
+        #                     y = np.array([i for i in y if i is not ma.masked])
+        #                 x = list(range(len(y)))
+        #                 if len(y) < 10:
+        #                     continue
+        #                 slope, intercept, r_value, p_value, std_err = st.linregress(
+        #                     x, y)
+        #                 if p_value < 0.05:
+        #                     slope_data[j][i] = slope
+        #     write_img(slope_data, filename, im_proj, im_geotrans, out_path,
+        #               ndv)
+        #     del Igs
 
 
 if __name__ == "__main__":
